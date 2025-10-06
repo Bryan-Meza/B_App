@@ -30,8 +30,6 @@ Xcode: 15.4 or newer (tested on Xcode 26.0)
 
 iOS Deployment Target: iOS 17.0+
 
-Swift Version: Swift 5.10+
-
 Frameworks: SwiftUI, Foundation
 
 ---
