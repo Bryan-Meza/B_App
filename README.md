@@ -9,7 +9,7 @@
 
 **Batman Movies App** is a SwiftUI-based iOS application that displays a catalog of **Batman movies** fetched from the [OMDb API](https://www.omdbapi.com/).  
 
-Users can scroll through a responsive grid of movie posters, tap on any item to see more details, and experience a design inspired by Apple’s **Podcasts** app — featuring a **large navigation title** that gracefully transitions to an inline one and a **translucent navigation bar**.
+Users can scroll through a responsive grid of movie posters and tap on any item to see more details.
 
 ---
 
