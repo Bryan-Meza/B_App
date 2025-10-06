@@ -11,9 +11,10 @@ import Observation
 @MainActor
 @Observable
 class MovieViewModel {
+    // Lista de películas obtenidas de la API
     var movies: [APIMovie] = []
 
-    // Cargar la lista general
+    /// Obtiene una lista de películas de Batman desde la API de OMDb.
     func getMovies() async {
         guard let url = URL(string: "https://www.omdbapi.com/?apikey=d1652e56&s=batman&type=movie&page=2") else { return }
         do {
@@ -25,7 +26,9 @@ class MovieViewModel {
         }
     }
 
-    // Obtener detalle de la película usando el mismo modelo
+    // Obtiene los detalles de una película específica usando su IMDb ID.
+    // Parameter imdbID: Identificador único de la película en IMDb.
+    // Returns: Un objeto `APIMovie` con la información detallada
     func getMovieDetail(by imdbID: String) async -> APIMovie? {
         guard let url = URL(string: "https://www.omdbapi.com/?apikey=d1652e56&i=\(imdbID)&plot=full") else { return nil }
         do {
@@ -38,4 +41,3 @@ class MovieViewModel {
         }
     }
 }
-

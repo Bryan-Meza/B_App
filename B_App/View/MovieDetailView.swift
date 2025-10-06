@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct MovieDetailView: View {
+    // Película seleccionada desde la vista principal
     let movie: APIMovie
+    
+    // ViewModel para obtener detalles adicionales desde la API
     @State var movieVM = MovieViewModel()
+    
+    // Película detallada
     @State private var detailedMovie: APIMovie?
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
+                
+                // Imagen del póster
                 if let url = URL(string: detailedMovie?.poster ?? movie.poster) {
                     AsyncImage(url: url) { img in
                         img.resizable()
@@ -26,11 +33,11 @@ struct MovieDetailView: View {
                     .shadow(radius: 6)
                 }
 
-                // Título y año
+                // Título y año de la película
                 Text("\(detailedMovie?.title ?? movie.title) (\(detailedMovie?.year ?? movie.year))")
                     .font(.title2.bold())
 
-                // Detalles (runtime, genre, rating)
+                // Detalles adicionales: duración, género y calificación
                 HStack(spacing: 12) {
                     if let runtime = detailedMovie?.runtime {
                         Label(runtime, systemImage: "clock")
@@ -45,14 +52,14 @@ struct MovieDetailView: View {
                 .font(.subheadline)
                 .foregroundColor(.secondary)
 
-                // Sinopsis
+                // Descripción
                 if let plot = detailedMovie?.plot {
                     Text(plot)
                         .font(.body)
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
-                // Director y actores
+                // Director y elenco principal
                 VStack(alignment: .leading, spacing: 6) {
                     if let director = detailedMovie?.director {
                         Text("Director: \(director)")
@@ -66,13 +73,17 @@ struct MovieDetailView: View {
             }
             .padding()
         }
+        // Título de navegación (modo compacto)
         .navigationTitle(detailedMovie?.title ?? movie.title)
         .navigationBarTitleDisplayMode(.inline)
+        
+        // Carga asincrónica de los detalles de la película
         .task {
             if let fullDetail = await movieVM.getMovieDetail(by: movie.imdbID) {
                 detailedMovie = fullDetail
             } else {
-                detailedMovie = movie // fallback con datos básicos
+                // Si falla, usa los datos básicos
+                detailedMovie = movie
             }
         }
     }
@@ -89,4 +100,3 @@ struct MovieDetailView: View {
         ))
     }
 }
-
